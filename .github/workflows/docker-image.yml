@@ -1,0 +1,21 @@
+name: Docker build and tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-in-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build docker image
+        run: docker build -t nft-contract .
+
+      - name: Run tests in container
+        run: docker run nft-contract
